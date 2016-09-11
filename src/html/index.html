@@ -35,6 +35,21 @@
                     v-on:click="requestClassify"
                   >Submit</button>
                 </p>
+
+                <table class="table">
+                  <thead>
+                    <tr>
+                      <th>Class</th>
+                      <th>Probability</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr v-for="proba in result">
+                      <th>{{ $key }}</th>
+                      <td>{{ proba }}</td>
+                    </tr>
+                  </tbody>
+                </table>
               </div>
             </div>
           </section>

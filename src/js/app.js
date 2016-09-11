@@ -1,3 +1,5 @@
+require('file?name=[name].[ext]!../html/index.html');
+
 import Vue from 'vue';
 import VueResource from 'vue-resource';
 
@@ -12,7 +14,7 @@ new Vue({
   el: '#form',
   data: {
     content: '',
-    result: null,
+    result: {},
     isFetching: false,
     isFailed: null,
   },
@@ -21,11 +23,9 @@ new Vue({
       this.isFetching = true;
       this.$http.post(classifyApi, {content: this.content}).then((response) => {
         // success callback
-        this.result = response.body;
+        this.result = response.body.result;
         this.isFetching = false;
         this.isFailed = false;
-
-        console.log(this.result)
       }, (response) => {
         // error callback
         this.result = null;
