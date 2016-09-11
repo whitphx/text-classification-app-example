@@ -1,5 +1,5 @@
 from os import makedirs
-from os.path import dirname, join, normpath, exists
+from os.path import dirname, join, exists
 import cPickle as pickle
 from sklearn.pipeline import Pipeline
 from sklearn.feature_extraction.text import TfidfVectorizer
@@ -13,6 +13,7 @@ tokenizer = MeCabTokenizer('/usr/local/lib/mecab/dic/mecab-ipadic-neologd')
 
 class ValidationFailException(Exception):
     pass
+
 
 class Model(object):
     save_dir = join(dirname(__file__), 'data')

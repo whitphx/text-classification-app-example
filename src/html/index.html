@@ -22,7 +22,8 @@
                 <p class="control">
                   <label for="" class="label">Content</label>
                   <textarea
-                    class="textarea{{ isFailed ? ' is-danger' : ''}}"
+                    class="textarea"
+                    v-bind:class="{'is-danger': isFailed}"
                     name="content"
                     rows="8"
                     cols="40"
@@ -32,8 +33,9 @@
                 </p>
                 <p class="control">
                   <button
-                    class="{{ isFetching ? 'button is-primary is-loading' : 'button is-primary' }}"
-                    v-on:click="requestClassify"
+                    class="button is-primary"
+                    v-bind:class="{'is-loading': isFetching}"
+                    v-on:click.stop.prevent="requestClassify"
                   >Submit</button>
                 </p>
 
