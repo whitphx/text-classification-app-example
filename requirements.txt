@@ -1,0 +1,9 @@
+Flask==0.11.1
+gensim==0.13.2
+jupyter==1.0.0
+mecab-python==0.996
+neologdn==0.2
+numpy==1.11.1
+pandas==0.18.1
+scikit-learn==0.17.1
+scipy==0.18.0
