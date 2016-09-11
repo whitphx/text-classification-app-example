@@ -18,3 +18,4 @@ _steps
 
 # Python
 *.pyc
+.ipynb_checkpoints
