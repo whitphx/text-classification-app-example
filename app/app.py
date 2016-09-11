@@ -1,6 +1,7 @@
 import os
 from flask import Flask, request, make_response, jsonify
 from decorators import crossdomain
+from model import Model
 
 
 env = os.environ.get('FLASK_ENV')
@@ -12,6 +13,8 @@ port = 5000
 
 app = Flask(__name__, static_url_path='')
 
+model = Model.restore()
+
 
 @app.route('/')
 def index():
@@ -22,16 +25,16 @@ def index():
 @crossdomain(origin='*' if debug else None)
 def classify():
     data = request.json
-    print data
     if data is None or u'content' not in data:
         response = make_response()
         response.status_code = 400
         return response
 
     content = data[u'content']
-    response = jsonify({
-        'content': content
-    })  # echo
+    if type(content) == unicode:
+        content = content.encode('utf8')
+
+    response = jsonify(model.get_result(content))
     response.status_code = 200
     return response
 
