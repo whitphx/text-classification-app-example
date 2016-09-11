@@ -1,5 +1,5 @@
 from os import listdir
-from os.path import join, isdir
+from os.path import join, isdir, dirname, normpath, abspath
 import re
 import pandas as pd
 import numpy as np
@@ -14,7 +14,7 @@ texts = []
 labels = np.array([], dtype=np.uint8)
 label_names = []
 
-datadir = '/Users/tsuchiya/data/text/'
+datadir = normpath(join(abspath(dirname(__file__)), '../data/livedoornews'))
 subdirs = listdir(datadir)
 label = 0
 for subdir in subdirs:

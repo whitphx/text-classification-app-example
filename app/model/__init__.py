@@ -11,8 +11,11 @@ from .tokenizer import MeCabTokenizer
 tokenizer = MeCabTokenizer('/usr/local/lib/mecab/dic/mecab-ipadic-neologd')
 
 
+class ValidationFailException(Exception):
+    pass
+
 class Model(object):
-    save_dir = normpath(join(dirname(__file__), '../../data'))
+    save_dir = join(dirname(__file__), 'data')
     save_path = join(save_dir, 'model.pkl')
 
     def __init__(self):
@@ -33,9 +36,23 @@ class Model(object):
     def set_label_names(self, label_names):
         self.label_names = pd.Series(label_names)
 
+    def validate(self, text):
+        if len(text) < 10:
+            raise ValidationFailException('Input too short')
+
+        return True
+
     def get_result(self, text):
         if self.label_names is None:
             raise Exception('label_names is not set.')
+
+        try:
+            self.validate(text)
+        except ValidationFailException as e:
+            return {
+                'ok': False,
+                'error': e.message
+            }
 
         try:
             proba = self.pipeline.predict_proba([text])[0]
