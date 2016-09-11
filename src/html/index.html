@@ -22,12 +22,13 @@
                 <p class="control">
                   <label for="" class="label">Content</label>
                   <textarea
-                    class="textarea"
+                    class="textarea{{ isFailed ? ' is-danger' : ''}}"
                     name="content"
                     rows="8"
                     cols="40"
                     v-model="content"
                   ></textarea>
+                  <span v-if="isFailed" class="help is-danger">{{ error }}</span>
                 </p>
                 <p class="control">
                   <button
