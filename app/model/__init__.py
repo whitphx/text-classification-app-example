@@ -4,6 +4,8 @@ import cPickle as pickle
 from sklearn.pipeline import Pipeline
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.ensemble import RandomForestClassifier
+import pandas as pd
+import numpy as np
 from .tokenizer import MeCabTokenizer
 
 tokenizer = MeCabTokenizer('/usr/local/lib/mecab/dic/mecab-ipadic-neologd')
@@ -29,7 +31,7 @@ class Model(object):
         self.pipeline.fit(X, y)
 
     def set_label_names(self, label_names):
-        self.label_names = label_names
+        self.label_names = pd.Series(label_names)
 
     def get_result(self, text):
         if self.label_names is None:
@@ -43,7 +45,16 @@ class Model(object):
                 'error': 'Invalid input',
             }
 
-        res = dict(zip(self. label_names, proba.tolist()))
+        indices = np.argsort(proba)[::-1]
+        label_names_sorted = self.label_names[indices]
+        proba_sorted = proba[indices]
+
+        res = [
+            {'label': l, 'proba': p}
+            for l, p
+            in zip(label_names_sorted, proba_sorted)
+        ]
+
         return {
             'ok': True,
             'result': res,

@@ -44,9 +44,9 @@
                     </tr>
                   </thead>
                   <tbody>
-                    <tr v-for="proba in result">
-                      <th>{{ $key }}</th>
-                      <td>{{ proba }}</td>
+                    <tr v-for="item in result">
+                      <th>{{ item.label }}</th>
+                      <td>{{ item.proba }}</td>
                     </tr>
                   </tbody>
                 </table>
